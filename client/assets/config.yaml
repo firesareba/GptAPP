@@ -1,0 +1,26 @@
+app:
+  name: "GptAPP"
+  currency_name: "Study Coins"
+llm:
+  providers: [openai, anthropic, gemini]
+  default_models:
+    openai: "gpt-5-mini"
+    anthropic: "claude-sonnet-4-5"
+    gemini: "gemini-2.5-flash"
+boss_battle:
+  default_time_per_turn_seconds: 15
+difficulty:
+  target_min_accuracy: 0.70
+  target_max_accuracy: 0.80
+decay:
+  enabled: true
+  frequency_hours: 24
+  rate_percent: 2.0
+nudge:
+  quiet_start: "22:00"
+  quiet_end: "06:00"
+backend:
+  base_url: "http://localhost:8000"
+branding:
+  primary_color: "#6750A4"
+  font_family: "Inter"
