@@ -1,0 +1,12 @@
+config/app.yaml
+.env
+.venv/
+__pycache__/
+*.pyc
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+build/
+.idea/
+.vscode/
