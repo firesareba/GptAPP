@@ -3,6 +3,7 @@ import re
 import asyncio
 from datetime import datetime, timedelta
 from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from pypdf import PdfReader
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
@@ -11,6 +12,13 @@ from .config import load_config
 from .models import Base, User, Topic, Material, Problem, Attempt, UserTopicMastery, UserWallet, WalletTransaction, BossBattle, Cosmetic, UserCosmetic
 
 cfg = load_config(); engine = create_async_engine(cfg.database_url, pool_pre_ping=True); Session = async_sessionmaker(engine, expire_on_commit=False); app = FastAPI(title=cfg.app_name)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
 class Generation(BaseModel):
  user_id:str; material_id:int|None=None; topic:str; difficulty:float=Field(ge=0,le=1); raw_llm_response:dict; battle_id:int|None=None
 class AttemptIn(BaseModel):
