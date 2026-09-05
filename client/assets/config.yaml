@@ -9,6 +9,9 @@ llm:
     gemini: "gemini-2.5-flash"
 boss_battle:
   default_time_per_turn_seconds: 15
+  entry_cost: 25
+  hp: 100
+  unlock_min_attempts: 10
 difficulty:
   target_min_accuracy: 0.70
   target_max_accuracy: 0.80
