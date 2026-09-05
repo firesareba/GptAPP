@@ -23,6 +23,8 @@ class Generation(BaseModel):
  user_id:str; material_id:int|None=None; topic:str; difficulty:float=Field(ge=0,le=1); raw_llm_response:dict; battle_id:int|None=None
 class AttemptIn(BaseModel):
  user_id:str; problem_id:int; submitted_answer:str; elapsed_ms:int=Field(ge=0); battle_id:int|None=None
+class TextMaterial(BaseModel):
+ user_id:str; text:str; filename:str='pasted-text'
 
 def normalize(v:str)->str:return re.sub(r'\s+',' ',v.strip().casefold())
 def verified_correct(p:Problem,a:str)->bool:return normalize(p.answer_key)==normalize(a)
@@ -58,10 +60,10 @@ async def startup():
 @app.get('/health')
 async def health():return {'ok':True,'app':cfg.app_name}
 @app.post('/materials/text')
-async def text_material(user_id:str,text:str,filename:str='pasted-text'):
- if not text.strip():raise HTTPException(400,'Text is empty')
+async def text_material(p:TextMaterial):
+ if not p.text.strip():raise HTTPException(400,'Text is empty')
  async with Session() as db:
-  u=await get_user(db,user_id);m=Material(user_id=u.id,filename=filename,source_text=text);db.add(m);await db.commit();await db.refresh(m);return {'id':m.id,'filename':m.filename}
+  u=await get_user(db,p.user_id);m=Material(user_id=u.id,filename=p.filename,source_text=p.text);db.add(m);await db.commit();await db.refresh(m);return {'id':m.id,'filename':m.filename}
 @app.post('/materials/pdf')
 async def pdf_material(user_id:str,file:UploadFile=File(...)):
  if not file.filename.lower().endswith('.pdf'):raise HTTPException(415,'Only PDF files are accepted')
