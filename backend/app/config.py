@@ -4,6 +4,8 @@ import yaml
 
 def load_config(path: str | Path | None = None):
     p = Path(path or Path(__file__).resolve().parents[2] / 'config' / 'app.yaml')
+    if not p.exists():
+        p = Path(__file__).resolve().parents[1] / 'config' / 'app.yaml'
     if not p.exists(): raise RuntimeError(f'Missing config file: {p}')
     data = yaml.safe_load(p.read_text())
     class Config: pass
