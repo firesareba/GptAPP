@@ -1,0 +1,18 @@
+name: gptapp
+description: Gamified study app
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.5.0
+  flutter_secure_storage: ^9.2.4
+  file_picker: ^10.3.2
+  yaml: ^3.1.3
+
+flutter:
+  uses-material-design: true
