@@ -8,7 +8,9 @@ services:
     ports: ['5432:5432']
     volumes: [gptapp_pg:/var/lib/postgresql/data]
   api:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     environment:
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@postgres:5432/gptapp
     ports: ['8000:8000']
